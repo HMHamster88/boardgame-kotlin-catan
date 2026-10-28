@@ -1,0 +1,14 @@
+{
+  "name": "boardgame-kotlin-catan",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Kotlin Catan module and its Vue front",
+  "homepage": "https://github.com/HMHamster88/boardgame-kotlin-catan",
+  "type": "module",
+  "workspaces": [
+    "front"
+  ],
+  "scripts": {
+    "build-front": "npm run build -w front"
+  }
+}
