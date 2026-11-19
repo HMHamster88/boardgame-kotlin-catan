@@ -30,9 +30,9 @@ import { ODialog, OButton } from '@oruga-ui/oruga-next';
 
 import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { CatanUseDevelopmentCardAction, CatanUseResourceDevelopmentCardAction, CatanUseResourceTypeDevelopmentCardAction } from 'catan-back';
-import { CatanDevelopmentCardType, CatanResourceType, developmentCardIsUsable } from 'catan-back';
-import { resourcesByTypes } from 'catan-back';
+import type { CatanUseDevelopmentCardAction, CatanUseResourceDevelopmentCardAction, CatanUseResourceTypeDevelopmentCardAction } from '../domain';
+import { CatanDevelopmentCardType, CatanResourceType, developmentCardIsUsable } from '../domain';
+import { resourcesByTypes } from '../domain';
 import CatanResourceTypeSelector from './CatanResourceTypeSelector.vue';
 import { developmentCardsImgs } from './graphics';
 

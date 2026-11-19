@@ -72,7 +72,7 @@ import type { Player, Vector2DLike } from 'boardgame-web-common';
 import { distinct, type HexGridData } from 'boardgame-web-common';
 import { Vector2D } from 'boardgame-web-common';
 import { robberImage } from './graphics';
-import type { CatanField, CatanHarbour, CatanRoad, CatanTerrainHex } from 'catan-back';
+import type { CatanField, CatanHarbour, CatanRoad, CatanTerrainHex } from '../domain';
 import CatanEdgeOverlay from './CatanEdgeOverlay.vue';
 import CatanHarbourComponent from './CatanHarbourComponent.vue';
 import CatanTerrainHexComponent from './CatanTerrainHexComponent.vue';

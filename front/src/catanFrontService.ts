@@ -15,6 +15,9 @@ export class CatanFrontService implements GameFrontService {
     gameViewComponent: Component = CatanGameView
     playerComponent: Component = PlayerComponent
     statisticsComponent: Component | undefined = StatisticsComponent
+    playerSettingsComponent: Component | undefined = undefined
+    createOrMigratePlayerGameSettings = undefined
+    createOrMigratePlayerGameInstanceSettings = undefined
     localization: any = {
         en: {
             CATAN: 'Catan',

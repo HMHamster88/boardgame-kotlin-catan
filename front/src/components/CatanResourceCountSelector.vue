@@ -17,7 +17,7 @@
 import { OButton } from '@oruga-ui/oruga-next';
 
 import { computed, type PropType } from 'vue';
-import type { CatanResourceType } from 'catan-back';
+import type { CatanResourceType } from '../domain';
 import { resourcesImages } from './graphics';
 
 const model = defineModel({ default: 0 })

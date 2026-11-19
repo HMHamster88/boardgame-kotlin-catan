@@ -20,8 +20,8 @@ import sheepCardImg from '../assets/resource-cards/sheep.webp'
 import wheatCardImg from '../assets/resource-cards/wheat.webp'
 import woodCardImg from '../assets/resource-cards/wood.webp'
 
-import { CatanTerrainHexType } from "catan-back"
-import { CatanDevelopmentCardType, CatanHarbourType, CatanResourceType, CatanSpecialCard } from 'catan-back'
+import { CatanTerrainHexType } from '../domain'
+import { CatanDevelopmentCardType, CatanHarbourType, CatanResourceType, CatanSpecialCard } from '../domain'
 
 export const portImage = portImg
 export const robberImage = robberImg

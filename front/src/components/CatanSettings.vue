@@ -38,9 +38,9 @@ import { OButton, OSelect, OSwitch, OField, OInput } from '@oruga-ui/oruga-next'
 
 import { type PropType } from 'vue';
 import CatanHexGrid from './CatanHexGrid.vue';
-import { type CatanGameSettings } from 'catan-back';
-import { type CatanGenerateFieldAction } from "catan-back";
-import { CatanGameFieldType } from "catan-back";
+import { type CatanGameSettings } from '../domain';
+import { type CatanGenerateFieldAction } from '../domain';
+import { CatanGameFieldType } from '../domain';
 import { useI18n } from 'vue-i18n';
 import type { GameAction } from 'boardgame-web-common';
 

@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import type { Player } from 'boardgame-web-common';
-import type { CatanPublicGameState } from 'catan-back';
+import type { CatanPublicGameState } from '../domain';
 import { computed, type PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 

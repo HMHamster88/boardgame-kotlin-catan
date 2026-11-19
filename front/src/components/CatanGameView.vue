@@ -131,7 +131,7 @@ import {
     type CatanTradeCloseAction,
     type CatanTradeResponseAction,
     type CatanUseDevelopmentCardAction
-} from "catan-back";
+} from '../domain';
 import { computed, ref, useTemplateRef, type PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import BuyItemIcon from './BuyItemIcon.vue';

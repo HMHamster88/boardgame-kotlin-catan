@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { CatanResourceType } from 'catan-back'
+import { CatanResourceType } from '../domain'
 import { resourcesImages } from './graphics'
 
 const resourceTypes = ref(Object.keys(CatanResourceType).map(v => v as CatanResourceType))

@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import type { GameStatistics } from 'boardgame-web-common';
-import { CatanResourceType, getAllResourcesCount, type CatanGameStatistics } from 'catan-back';
+import { CatanResourceType, getAllResourcesCount, type CatanGameStatistics } from '../domain';
 import { computed, type PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { resourcesImages } from './graphics';

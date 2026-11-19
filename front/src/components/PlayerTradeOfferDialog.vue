@@ -46,7 +46,7 @@ import { computed, type PropType } from 'vue'
 import { useI18n } from 'vue-i18n'
 import type { Player } from 'boardgame-web-common'
 import { filterRecord, partialRecordEntries, recordEntries } from 'boardgame-web-common'
-import { TradeAnswerState, type CatanPlayerTradeOffer, type CatanResources, type CatanResourceType } from 'catan-back'
+import { TradeAnswerState, type CatanPlayerTradeOffer, type CatanResources, type CatanResourceType } from '../domain'
 import { resourcesImages } from './graphics'
 import ResorcesComponent from "./ResorcesComponent.vue";
 

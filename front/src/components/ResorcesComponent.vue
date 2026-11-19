@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { OIcon } from '@oruga-ui/oruga-next';
 import { recordEntries } from 'boardgame-web-common';
-import { getAllResourcesCount, type CatanResources } from 'catan-back';
+import { getAllResourcesCount, type CatanResources } from '../domain';
 import { computed, type PropType } from 'vue';
 import { resourcesImages } from './graphics';
 

@@ -51,8 +51,8 @@
 
 import { computed, ref, useTemplateRef, watch, type PropType } from 'vue';
 import { rangeArray, recordEntries, removeElement } from 'boardgame-web-common';
-import type { CatanUseDevelopmentCardAction } from 'catan-back';
-import { CatanSpecialCard, initResources, type CatanDevelopmentCardType, type CatanResources, getAllResourcesCount } from 'catan-back';
+import type { CatanUseDevelopmentCardAction } from '../domain';
+import { CatanSpecialCard, initResources, type CatanDevelopmentCardType, type CatanResources, getAllResourcesCount } from '../domain';
 import DevelopmentCardDialog from './DevelopmentCardDialog.vue';
 import { developmentCardsImgs, resourceCardsImg, specialCardsImgs } from './graphics';
 import { useI18n } from 'vue-i18n';

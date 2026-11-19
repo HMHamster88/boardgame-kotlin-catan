@@ -12,7 +12,7 @@
 import { computed, type PropType } from 'vue';
 import type { Player } from 'boardgame-web-common';
 import { getEdgeAnge, pointyHexToPixel } from 'boardgame-web-common';
-import { type CatanRoad } from 'catan-back';
+import { type CatanRoad } from '../domain';
 
 const color = computed(() => {
     const player = props.players?.find(player => player.userId == props.data.playerId)!

@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { CatanBuyItemType } from 'catan-back';
+import { CatanBuyItemType } from '../domain';
 import { computed } from 'vue';
 import Settlement from './Settlement.vue';
 import City from './City.vue';

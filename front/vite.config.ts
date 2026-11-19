@@ -21,9 +21,6 @@ export default defineConfig({
         'boardgame-web-common': {
           generate: false
         },
-        'catan-back': {
-
-        },
         '@oruga-ui/oruga-next': {
           generate: false
         }

@@ -47,8 +47,8 @@ import { ODialog, OButton, OSelect, OIcon } from '@oruga-ui/oruga-next';
 
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CatanResourceType, CatanTradeType, initResourcePrices, initResources, type CatanResourcePrices, type CatanResources, type CatanTradeDeal } from 'catan-back';
-import { checkDeal } from 'catan-back';
+import { CatanResourceType, CatanTradeType, initResourcePrices, initResources, type CatanResourcePrices, type CatanResources, type CatanTradeDeal } from '../domain';
+import { checkDeal } from '../domain';
 import CatanResourceCountSelector from './CatanResourceCountSelector.vue';
 
 let localization: any = {

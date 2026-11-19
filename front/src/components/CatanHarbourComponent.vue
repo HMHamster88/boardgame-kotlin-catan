@@ -19,7 +19,7 @@ import { computed, type PropType } from 'vue'
 import { portImage, harbourResourcesImages } from './graphics'
 import { Vector2D } from 'boardgame-web-common'
 import { getEdgeAnge, pointyHexToPixel } from 'boardgame-web-common'
-import { CatanHarbourType, type CatanHarbour } from 'catan-back'
+import { CatanHarbourType, type CatanHarbour } from '../domain'
 
 const position = computed(() => {
     return pointyHexToPixel(props.data.position, props.hexSize).multiplied(1 / 6)

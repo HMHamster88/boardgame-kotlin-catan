@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { computed, type PropType } from 'vue'
 import { hexagonString, pointyHexToPixel } from 'boardgame-web-common'
-import type { CatanTerrainHex } from 'catan-back'
+import type { CatanTerrainHex } from '../domain'
 
 const dropChances = new Map<number, number>([
     [2, 1 / 36],

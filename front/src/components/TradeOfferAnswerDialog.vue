@@ -30,7 +30,7 @@
 
 import { ODialog, OIcon, OButton } from '@oruga-ui/oruga-next';
 import { computed, type PropType } from 'vue'
-import { type CatanPlayerTradeOffer, type TradeAnswer, TradeAnswerState } from 'catan-back'
+import { type CatanPlayerTradeOffer, type TradeAnswer, TradeAnswerState } from '../domain'
 import { useI18n } from 'vue-i18n'
 import type { Player } from 'boardgame-web-common'
 
