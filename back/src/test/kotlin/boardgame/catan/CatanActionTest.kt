@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 
 class CatanActionTest {
 
-    private val service = CatanGameBackService()
+    private val service = CatanGameBackService(diceAnimationMs = 0)
 
     private class FakeContext(
         override val game: Game,
@@ -29,6 +29,7 @@ class CatanActionTest {
         private var privateValue = initialPrivate
 
         val notifications = mutableListOf<String>()
+        val publishedPublicStates = mutableListOf<JsonElement>()
 
         override val settings: JsonObject get() = settingsValue
         override val publicState: JsonElement get() = publicValue
@@ -44,6 +45,10 @@ class CatanActionTest {
 
         override fun updateSettings(value: JsonElement) {
             settingsValue = value.jsonObject
+        }
+
+        override fun publishPublicState() {
+            publishedPublicStates += publicValue
         }
 
         override fun notify(peerId: String?, message: String, params: JsonElement?) {
@@ -116,6 +121,10 @@ class CatanActionTest {
         val active = activePlayerId(ctx)
         service.performAction(ctx, encodeTree(CatanRollDicesAction()), active)
         val afterRoll = decodeTree<CatanPublicGameState>(ctx.publicState)
+        assertTrue(ctx.publishedPublicStates.isNotEmpty())
+        val zeroFrame = decodeTree<CatanPublicGameState>(ctx.publishedPublicStates.first())
+        assertEquals(0, zeroFrame.dices.redDice)
+        assertEquals(0, zeroFrame.dices.yellowDice)
         assertTrue(afterRoll.phase != CatanGamePhase.EMBARK_FIRST)
         assertTrue(afterRoll.phase != CatanGamePhase.EMBARK_SECOND)
         assertTrue(afterRoll.dices.redDice in 1..6)

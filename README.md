@@ -13,7 +13,9 @@ front/            Vue Module Federation remote (copied from boardgame-web-catan/
 
 Implemented: `back/` — field generation (classic/extended), embark, dice and resource production,
 robber, building roads/settlements/cities, bank/player trades, development cards, largest army and
-longest road, points and winners. Tests cover field generation, state start and the first turns.
+longest road, points and winners. The dice roll publishes a zero-dice frame and waits 1 s before the
+result (`CatanGameBackService(diceAnimationMs = …)` overrides it), matching the TS animation. Tests
+cover field generation, state start and the first turns.
 
 Bots are not implemented yet (`nextBotAction` returns null, the front disables "Add bot").
 

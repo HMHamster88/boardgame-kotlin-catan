@@ -13,6 +13,7 @@ import boardgame.api.decodeTree
 import boardgame.api.encodeTree
 import boardgame.api.removeElement
 import boardgame.api.str
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
@@ -27,7 +28,7 @@ class CatanGameModule : GameBackModule {
     override fun createService(): GameBackService = CatanGameBackService()
 }
 
-class CatanGameBackService : GameBackService {
+class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBackService {
 
     override val type: String = CATAN_TYPE
     override val version: String = BuildInfo.version
@@ -162,6 +163,12 @@ class CatanGameBackService : GameBackService {
 
             "CatanRollDicesAction" -> {
                 if (!isActivePlayer || activePrivateState == null) return null
+                publicState.dices.redDice = 0
+                publicState.dices.yellowDice = 0
+                ctx.updatePublicState(encodeTree(publicState))
+                ctx.publishPublicState()
+                if (diceAnimationMs > 0) delay(diceAnimationMs)
+
                 publicState.dices.redDice = randomInt(1, 6)
                 publicState.dices.yellowDice = randomInt(1, 6)
                 val sum = publicState.dices.redDice + publicState.dices.yellowDice
