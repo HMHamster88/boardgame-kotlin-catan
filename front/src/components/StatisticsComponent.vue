@@ -16,15 +16,15 @@
                     <span>{{ t('cities') }}</span>
                     <span>{{ playerPoints.cities }} × 2 = {{ playerPoints.cityPoints }}</span>
                 </li>
-                <li>
+                <li v-if="playerPoints.longestRoadPoints !== 0">
                     <span>{{ t('longestRoad') }}</span>
                     <span>{{ playerPoints.longestRoadPoints }}</span>
                 </li>
-                <li>
+                <li v-if="playerPoints.biggestArmyPoints !== 0">
                     <span>{{ t('biggestArmy') }}</span>
                     <span>{{ playerPoints.biggestArmyPoints }}</span>
                 </li>
-                <li v-if="gameFinished">
+                <li v-if="gameFinished && playerPoints.privatePoints !== 0">
                     <span>{{ t('developmentCards') }}</span>
                     <span>{{ playerPoints.privatePoints }}</span>
                 </li>
