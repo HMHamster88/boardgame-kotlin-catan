@@ -224,10 +224,20 @@ data class CatanPlayerTradeOffer(
 
 @GenerateTs
 @Serializable
+data class CatanPlayerStatistics(
+    val playerId: String = "",
+    var points: Int = 0,
+    /** Hidden victory-point cards; only populated once the game is finished. */
+    var privatePoints: Int? = null
+)
+
+@GenerateTs
+@Serializable
 data class CatanGameStatistics(
     var turnCount: Int = 0,
     var resourcesReceived: CatanResources = initResources(),
-    var diceNumbersRolled: MutableList<Int> = mutableListOf()
+    var diceNumbersRolled: MutableList<Int> = mutableListOf(),
+    var playersStatistics: MutableList<CatanPlayerStatistics> = mutableListOf()
 )
 
 @GenerateTs

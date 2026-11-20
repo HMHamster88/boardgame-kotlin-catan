@@ -57,7 +57,11 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
     override fun startGame(game: Game, settings: JsonObject): GameStatePayload {
         val gameSettings = decodeTree<CatanGameSettings>(settings)
         val publicPlayers = game.players.map { CatanPlayerPublicState(playerId = it.userId) }
-        val statistics = CatanGameStatistics()
+        val statistics = CatanGameStatistics(
+            playersStatistics = game.players
+                .map { CatanPlayerStatistics(playerId = it.userId) }
+                .toMutableList()
+        )
         val publicState = CatanPublicGameState(
             field = gameSettings.field,
             phase = CatanGamePhase.EMBARK_FIRST,
@@ -499,6 +503,15 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
             game.status = GameStatus.FINISHED
             publicState.winnersIds = mutableListOf(winner.key)
         }
+
+        val finished = game.status == GameStatus.FINISHED
+        publicState.statistics.playersStatistics = game.players.map { player ->
+            CatanPlayerStatistics(
+                playerId = player.userId,
+                points = publicPoints[player.userId] ?: 0,
+                privatePoints = if (finished) privatePoints[player.userId] ?: 0 else null
+            )
+        }.toMutableList()
 
         val onHand = initResources()
         privateState.playersStates.forEach { addResources(onHand, it.resources) }

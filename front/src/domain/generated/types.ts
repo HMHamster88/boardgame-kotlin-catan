@@ -99,6 +99,7 @@ export interface CatanGameStatistics {
     turnCount: number
     resourcesReceived: Record<CatanResourceType, number>
     diceNumbersRolled: number[]
+    playersStatistics: CatanPlayerStatistics[]
 }
 
 export interface CatanGenerateFieldAction {
@@ -154,6 +155,12 @@ export interface CatanPlayerPublicState {
     openedDevelopmentCards: CatanDevelopmentCardType[]
     specialCards: CatanSpecialCard[]
     resourceCount: number
+}
+
+export interface CatanPlayerStatistics {
+    playerId: string
+    points: number
+    privatePoints?: number
 }
 
 export interface CatanPlayerTradeOffer {

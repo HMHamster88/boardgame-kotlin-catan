@@ -55,6 +55,8 @@ class CatanServiceTest {
         assertEquals(25, privateState.developmentCardsDeck.size)
         assertTrue(publicState.activePlayerIndex in 0..2)
         assertTrue(publicState.playersStates.all { it.points == 0 })
+        assertEquals(3, publicState.statistics.playersStatistics.size)
+        assertTrue(publicState.statistics.playersStatistics.all { it.points == 0 && it.privatePoints == null })
         assertTrue(privateState.playersStates.all { getAllResourcesCount(it.resources) == 0 })
     }
 

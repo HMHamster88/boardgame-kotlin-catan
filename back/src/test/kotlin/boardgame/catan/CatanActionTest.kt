@@ -2,6 +2,7 @@ package boardgame.catan
 
 import boardgame.api.Game
 import boardgame.api.GameContext
+import boardgame.api.GameStatus
 import boardgame.api.Player
 import boardgame.api.decodeTree
 import boardgame.api.encodeTree
@@ -138,6 +139,37 @@ class CatanActionTest {
             assertEquals(1, afterEnd.statistics.turnCount)
             assertTrue(activePlayerId(ctx) != active)
         }
+    }
+
+    @Test
+    fun privatePointsAreRevealedOnlyWhenTheGameIsFinished() = runBlocking {
+        val game = game()
+        val settings = decodeTree<CatanGameSettings>(service.getDefaultSettings()).copy(maxPoints = 2)
+        val settingsJson = encodeTree(settings).jsonObject
+        val state = service.startGame(game, settingsJson)
+        val ctx = context(game, settingsJson, state)
+
+        val public = decodeTree<CatanPublicGameState>(ctx.publicState)
+        public.activePlayerIndex = 0
+        val private = decodeTree<CatanPrivateGameState>(ctx.privateState!!)
+        private.playersStates.first { it.playerId == "p1" }.developmentCards += CatanDevelopmentCardType.CHAPEL
+        ctx.updatePublicState(encodeTree(public))
+        ctx.updatePrivateState(encodeTree(private))
+
+        service.performAction(
+            ctx,
+            encodeTree(CatanEmbarkAction(settlement = Vector2D(2, 2), road = Vector2D(3, 0))),
+            "p1"
+        )
+
+        val after = decodeTree<CatanPublicGameState>(ctx.publicState)
+        assertEquals(GameStatus.FINISHED, game.status)
+        val p1 = after.statistics.playersStatistics.first { it.playerId == "p1" }
+        assertEquals(1, p1.points)
+        assertEquals(1, p1.privatePoints)
+        val p2 = after.statistics.playersStatistics.first { it.playerId == "p2" }
+        assertEquals(0, p2.points)
+        assertEquals(0, p2.privatePoints)
     }
 
     @Test
