@@ -3,15 +3,15 @@
     "VsCodeTaskButtons.tasks": [
         {
             "label": "$(tools) Dev build",
-            "task": "Core: dev build",
-            "tooltip": "Regenerate protocol types, build the front and the core plugin jar",
+            "task": "Catan: dev build",
+            "tooltip": "Regenerate model types, build the front and the game plugin jar",
             "alignment": "left"
         },
         {
             "label": "$(package) Release build",
-            "task": "Core: release build",
-            "tooltip": "Build the core release zip (front, jar and classes.dex)",
-            "alignment": "left"
+            "task": "Catan: release build",
+            "tooltip": "Build the Catan release zip (front, jar and classes.dex)",
+            "alignment": "right"
         }
     ]
 }

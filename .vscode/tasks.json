@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Core: dev build",
+            "label": "Catan: dev build",
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
             "windows": {
@@ -24,7 +24,7 @@
             "group": "build"
         },
         {
-            "label": "Core: release build",
+            "label": "Catan: release build",
             "type": "shell",
             "command": "${workspaceFolder}/gradlew",
             "windows": {
