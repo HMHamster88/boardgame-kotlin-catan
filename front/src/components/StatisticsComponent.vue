@@ -18,11 +18,11 @@
                 </li>
                 <li>
                     <span>{{ t('longestRoad') }}</span>
-                    <span>{{ signedPoints(playerPoints.longestRoadPoints) }}</span>
+                    <span>{{ playerPoints.longestRoadPoints }}</span>
                 </li>
                 <li>
                     <span>{{ t('biggestArmy') }}</span>
-                    <span>{{ signedPoints(playerPoints.biggestArmyPoints) }}</span>
+                    <span>{{ playerPoints.biggestArmyPoints }}</span>
                 </li>
                 <li v-if="gameFinished">
                     <span>{{ t('developmentCards') }}</span>
@@ -150,10 +150,6 @@ const catanStatistics = computed(() => {
 })
 
 const gameFinished = computed(() => props.game?.status === GameStatusEnum.FINISHED)
-
-function signedPoints(points: number): string {
-    return points === 0 ? '0' : `+${points}`
-}
 
 const playersPoints = computed(() => {
     const statistics = catanStatistics.value.playersStatistics ?? []
