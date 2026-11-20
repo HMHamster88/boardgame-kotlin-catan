@@ -68,6 +68,19 @@ release does not overwrite the running one and the core loads the newest version
 
 IntelliJ IDEA: the shared **Build Catan release** run configuration runs `releaseBuild`.
 
+## Publishing a release
+
+```bash
+gradle publishRelease                 # latest release
+gradle publishRelease -PghDraft=true  # draft for review
+```
+
+Runs `releaseBuild`, pushes the local `v<version>` tag and creates the GitHub release with generated
+notes and `catan-<version>.zip` as its only asset. Requires `gh` installed/authenticated, a clean tree at
+the tagged commit, and an `origin` remote (create the GitHub repository and add it before the first
+release). Draft releases are not returned by GitHub's latest-release endpoint, so the launcher will not
+pick them up until published.
+
 ## TypeScript model codegen
 
 ```bash
