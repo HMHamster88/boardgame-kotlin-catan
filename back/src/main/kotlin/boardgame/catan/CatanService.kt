@@ -435,13 +435,20 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
         val field = publicState.field
         val publicPoints = game.players.associate { it.userId to 0 }.toMutableMap()
         val privatePoints = game.players.associate { it.userId to 0 }.toMutableMap()
+        val settlements = game.players.associate { it.userId to 0 }.toMutableMap()
+        val cities = game.players.associate { it.userId to 0 }.toMutableMap()
 
         field.intersections.flatMap { it.intersectionObjects }.forEach { obj ->
             when (obj.type) {
-                CatanIntersectionObjectType.SETTLEMENT ->
+                CatanIntersectionObjectType.SETTLEMENT -> {
                     publicPoints[obj.playerId] = (publicPoints[obj.playerId] ?: 0) + 1
-                CatanIntersectionObjectType.CITY ->
+                    settlements[obj.playerId] = (settlements[obj.playerId] ?: 0) + 1
+                }
+
+                CatanIntersectionObjectType.CITY -> {
                     publicPoints[obj.playerId] = (publicPoints[obj.playerId] ?: 0) + 2
+                    cities[obj.playerId] = (cities[obj.playerId] ?: 0) + 1
+                }
             }
         }
         privateState.playersStates.forEach { state ->
@@ -459,7 +466,8 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
             if (current == null || current.playerId == biggestArmy.playerId ||
                 armyCount(biggestArmy) > armyCount(current)
             ) {
-                publicPoints[biggestArmy.playerId] = (publicPoints[biggestArmy.playerId] ?: 0) + 2
+                publicPoints[biggestArmy.playerId] =
+                    (publicPoints[biggestArmy.playerId] ?: 0) + SPECIAL_CARD_POINTS
                 if (current != null && current.playerId != biggestArmy.playerId) {
                     current.specialCards.removeElement(CatanSpecialCard.BIGGEST_ARMY)
                 }
@@ -477,7 +485,8 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
             if (player != null && (currentId == null || longestRoadPlayerId == currentId ||
                     longestRoad.size > publicState.longestRoad.size)
             ) {
-                publicPoints[longestRoadPlayerId] = (publicPoints[longestRoadPlayerId] ?: 0) + 2
+                publicPoints[longestRoadPlayerId] =
+                    (publicPoints[longestRoadPlayerId] ?: 0) + SPECIAL_CARD_POINTS
                 if (longestRoadPlayerId != currentId) {
                     publicState.playersStates.firstOrNull { it.playerId == currentId }
                         ?.specialCards?.removeElement(CatanSpecialCard.LONGEST_ROAD)
@@ -506,9 +515,32 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
 
         val finished = game.status == GameStatus.FINISHED
         publicState.statistics.playersStatistics = game.players.map { player ->
+            val playerPublicState = publicState.playersStates.firstOrNull { it.playerId == player.userId }
+            val settlementCount = settlements[player.userId] ?: 0
+            val cityCount = cities[player.userId] ?: 0
             CatanPlayerStatistics(
                 playerId = player.userId,
                 points = publicPoints[player.userId] ?: 0,
+                settlements = settlementCount,
+                settlementPoints = settlementCount,
+                cities = cityCount,
+                cityPoints = cityCount * 2,
+                longestRoadPoints = if (playerPublicState?.specialCards?.contains(
+                        CatanSpecialCard.LONGEST_ROAD
+                    ) == true
+                ) {
+                    SPECIAL_CARD_POINTS
+                } else {
+                    0
+                },
+                biggestArmyPoints = if (playerPublicState?.specialCards?.contains(
+                        CatanSpecialCard.BIGGEST_ARMY
+                    ) == true
+                ) {
+                    SPECIAL_CARD_POINTS
+                } else {
+                    0
+                },
                 privatePoints = if (finished) privatePoints[player.userId] ?: 0 else null
             )
         }.toMutableList()
@@ -644,6 +676,7 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
         private const val EMBARK_ROADS_COUNT = 2
         private const val MIN_LARGEST_ARMY = 3
         private const val MIN_LONGEST_ROAD = 5
+        private const val SPECIAL_CARD_POINTS = 2
 
         private val FIELD_PROPERTIES = mapOf(
             CatanGameFieldType.CLASSIC to FieldProperties(

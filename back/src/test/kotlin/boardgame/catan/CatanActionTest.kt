@@ -166,10 +166,58 @@ class CatanActionTest {
         assertEquals(GameStatus.FINISHED, game.status)
         val p1 = after.statistics.playersStatistics.first { it.playerId == "p1" }
         assertEquals(1, p1.points)
+        assertEquals(1, p1.settlements)
+        assertEquals(1, p1.settlementPoints)
+        assertEquals(0, p1.cities)
+        assertEquals(0, p1.cityPoints)
+        assertEquals(0, p1.longestRoadPoints)
+        assertEquals(0, p1.biggestArmyPoints)
         assertEquals(1, p1.privatePoints)
         val p2 = after.statistics.playersStatistics.first { it.playerId == "p2" }
         assertEquals(0, p2.points)
+        assertEquals(0, p2.settlements)
+        assertEquals(0, p2.cities)
         assertEquals(0, p2.privatePoints)
+    }
+
+    @Test
+    fun statisticsBreakDownCitiesAndBiggestArmyPoints() = runBlocking {
+        val game = game()
+        val settings = service.getDefaultSettings()
+        val state = service.startGame(game, settings)
+        val ctx = context(game, settings, state)
+
+        val public = decodeTree<CatanPublicGameState>(ctx.publicState)
+        public.activePlayerIndex = 0
+        public.playersStates.first { it.playerId == "p1" }.openedDevelopmentCards +=
+            List(3) { CatanDevelopmentCardType.KNIGNT }
+        public.field.intersections += CatanIntersection(
+            position = Vector2D(10, 10),
+            intersectionObjects = mutableListOf(
+                CatanIntersectionObject(
+                    playerId = "p1",
+                    type = CatanIntersectionObjectType.CITY
+                )
+            )
+        )
+        ctx.updatePublicState(encodeTree(public))
+
+        service.performAction(
+            ctx,
+            encodeTree(CatanEmbarkAction(settlement = Vector2D(2, 2), road = Vector2D(3, 0))),
+            "p1"
+        )
+
+        val p1 = decodeTree<CatanPublicGameState>(ctx.publicState)
+            .statistics.playersStatistics.first { it.playerId == "p1" }
+        assertEquals(1, p1.settlements)
+        assertEquals(1, p1.settlementPoints)
+        assertEquals(1, p1.cities)
+        assertEquals(2, p1.cityPoints)
+        assertEquals(0, p1.longestRoadPoints)
+        assertEquals(2, p1.biggestArmyPoints)
+        assertEquals(5, p1.points)
+        assertEquals(null, p1.privatePoints)
     }
 
     @Test

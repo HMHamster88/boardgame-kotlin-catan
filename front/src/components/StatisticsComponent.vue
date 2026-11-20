@@ -2,26 +2,38 @@
     <div class="flex flex-col">
         <span>{{ t('turnCount') }} : {{ catanStatistics.turnCount }}</span>
         <h5>{{ t('playersPoints') }}</h5>
-        <table class="points-table">
-            <thead>
-                <tr>
-                    <th>{{ t('player') }}</th>
-                    <th>{{ t('points') }}</th>
-                    <th v-if="gameFinished">{{ t('privatePoints') }}</th>
-                    <th v-if="gameFinished">{{ t('totalPoints') }}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="playerPoints in playersPoints" :key="playerPoints.playerId">
-                    <td>{{ playerPoints.name }}</td>
-                    <td>{{ playerPoints.points }}</td>
-                    <template v-if="gameFinished">
-                        <td>{{ playerPoints.privatePoints }}</td>
-                        <td>{{ playerPoints.totalPoints }}</td>
-                    </template>
-                </tr>
-            </tbody>
-        </table>
+        <div v-for="playerPoints in playersPoints" :key="playerPoints.playerId" class="player-points">
+            <div class="player-points-header">
+                <span>{{ playerPoints.name }}</span>
+                <span>{{ playerPoints.points }}</span>
+            </div>
+            <ul class="points-breakdown">
+                <li>
+                    <span>{{ t('settlements') }}</span>
+                    <span>{{ playerPoints.settlements }} × 1 = {{ playerPoints.settlementPoints }}</span>
+                </li>
+                <li>
+                    <span>{{ t('cities') }}</span>
+                    <span>{{ playerPoints.cities }} × 2 = {{ playerPoints.cityPoints }}</span>
+                </li>
+                <li>
+                    <span>{{ t('longestRoad') }}</span>
+                    <span>{{ signedPoints(playerPoints.longestRoadPoints) }}</span>
+                </li>
+                <li>
+                    <span>{{ t('biggestArmy') }}</span>
+                    <span>{{ signedPoints(playerPoints.biggestArmyPoints) }}</span>
+                </li>
+                <li v-if="gameFinished">
+                    <span>{{ t('developmentCards') }}</span>
+                    <span>{{ playerPoints.privatePoints }}</span>
+                </li>
+                <li v-if="gameFinished" class="points-total">
+                    <span>{{ t('totalPoints') }}</span>
+                    <span>{{ playerPoints.totalPoints }}</span>
+                </li>
+            </ul>
+        </div>
         <h5>{{ t('dices') }}</h5>
         <div v-for="diceVal in diceRollsStats" class="flex flex-row items-center">
             <span style="width: 3rem;">{{ diceVal.diceValue }} : {{ diceVal.count }}</span>
@@ -52,9 +64,11 @@ let localization: any = {
         dices: 'Dices',
         turnCount: 'Turn Count',
         playersPoints: 'Players Points',
-        player: 'Player',
-        points: 'Public Points',
-        privatePoints: 'Private Points',
+        settlements: 'Settlements',
+        cities: 'Cities',
+        longestRoad: 'Longest road',
+        biggestArmy: 'Biggest army',
+        developmentCards: 'Development cards',
         totalPoints: 'Total',
         resources: 'Resources Received',
         resourceType: {
@@ -69,9 +83,11 @@ let localization: any = {
         dices: 'Кубики',
         turnCount: 'Количество Ходов',
         playersPoints: 'Очки игроков',
-        player: 'Игрок',
-        points: 'Открытые очки',
-        privatePoints: 'Личные очки',
+        settlements: 'Поселения',
+        cities: 'Города',
+        longestRoad: 'Самая длинная дорога',
+        biggestArmy: 'Самая большая армия',
+        developmentCards: 'Карты развития',
         totalPoints: 'Всего',
         resources: 'Полученные Ресурсы',
         resourceType: {
@@ -135,6 +151,10 @@ const catanStatistics = computed(() => {
 
 const gameFinished = computed(() => props.game?.status === GameStatusEnum.FINISHED)
 
+function signedPoints(points: number): string {
+    return points === 0 ? '0' : `+${points}`
+}
+
 const playersPoints = computed(() => {
     const statistics = catanStatistics.value.playersStatistics ?? []
     const players = props.game?.players ?? []
@@ -147,6 +167,12 @@ const playersPoints = computed(() => {
             playerId: player.userId,
             name: player.name,
             points,
+            settlements: stat?.settlements ?? 0,
+            settlementPoints: stat?.settlementPoints ?? 0,
+            cities: stat?.cities ?? 0,
+            cityPoints: stat?.cityPoints ?? 0,
+            longestRoadPoints: stat?.longestRoadPoints ?? 0,
+            biggestArmyPoints: stat?.biggestArmyPoints ?? 0,
             privatePoints,
             totalPoints: points + privatePoints
         }
@@ -166,22 +192,36 @@ const props = defineProps({
 </script>
 
 <style>
-.points-table {
-    width: 100%;
-    margin-bottom: 0.5rem;
-    border-collapse: collapse;
+.player-points {
+    margin-bottom: 0.75rem;
 }
 
-.points-table th,
-.points-table td {
-    padding: 0.15rem 0.4rem;
-    text-align: left;
+.player-points-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
     border-bottom: 1px solid var(--oruga-control-border-color);
+    padding-bottom: 0.15rem;
 }
 
-.points-table th:not(:first-child),
-.points-table td:not(:first-child) {
-    text-align: center;
+.points-breakdown {
+    list-style: none;
+    margin: 0.25rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.points-breakdown li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.1rem 0;
+}
+
+.points-total {
+    font-weight: 600;
+    border-top: 1px solid var(--oruga-control-border-color);
+    margin-top: 0.15rem;
+    padding-top: 0.25rem;
 }
 
 .progress {

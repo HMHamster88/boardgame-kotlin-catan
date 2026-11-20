@@ -160,6 +160,12 @@ export interface CatanPlayerPublicState {
 export interface CatanPlayerStatistics {
     playerId: string
     points: number
+    settlements: number
+    settlementPoints: number
+    cities: number
+    cityPoints: number
+    longestRoadPoints: number
+    biggestArmyPoints: number
     privatePoints?: number
 }
 

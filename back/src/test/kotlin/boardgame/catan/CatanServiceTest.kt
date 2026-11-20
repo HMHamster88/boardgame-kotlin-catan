@@ -56,7 +56,16 @@ class CatanServiceTest {
         assertTrue(publicState.activePlayerIndex in 0..2)
         assertTrue(publicState.playersStates.all { it.points == 0 })
         assertEquals(3, publicState.statistics.playersStatistics.size)
-        assertTrue(publicState.statistics.playersStatistics.all { it.points == 0 && it.privatePoints == null })
+        assertTrue(publicState.statistics.playersStatistics.all {
+            it.points == 0 &&
+                it.settlements == 0 &&
+                it.settlementPoints == 0 &&
+                it.cities == 0 &&
+                it.cityPoints == 0 &&
+                it.longestRoadPoints == 0 &&
+                it.biggestArmyPoints == 0 &&
+                it.privatePoints == null
+        })
         assertTrue(privateState.playersStates.all { getAllResourcesCount(it.resources) == 0 })
     }
 
