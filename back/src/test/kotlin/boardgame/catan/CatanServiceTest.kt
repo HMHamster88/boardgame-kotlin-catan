@@ -59,9 +59,7 @@ class CatanServiceTest {
         assertTrue(publicState.statistics.playersStatistics.all {
             it.points == 0 &&
                 it.settlements == 0 &&
-                it.settlementPoints == 0 &&
                 it.cities == 0 &&
-                it.cityPoints == 0 &&
                 it.longestRoadPoints == 0 &&
                 it.biggestArmyPoints == 0 &&
                 it.privatePoints == null

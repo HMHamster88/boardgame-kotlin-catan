@@ -167,9 +167,7 @@ class CatanActionTest {
         val p1 = after.statistics.playersStatistics.first { it.playerId == "p1" }
         assertEquals(1, p1.points)
         assertEquals(1, p1.settlements)
-        assertEquals(1, p1.settlementPoints)
         assertEquals(0, p1.cities)
-        assertEquals(0, p1.cityPoints)
         assertEquals(0, p1.longestRoadPoints)
         assertEquals(0, p1.biggestArmyPoints)
         assertEquals(1, p1.privatePoints)
@@ -211,9 +209,7 @@ class CatanActionTest {
         val p1 = decodeTree<CatanPublicGameState>(ctx.publicState)
             .statistics.playersStatistics.first { it.playerId == "p1" }
         assertEquals(1, p1.settlements)
-        assertEquals(1, p1.settlementPoints)
         assertEquals(1, p1.cities)
-        assertEquals(2, p1.cityPoints)
         assertEquals(0, p1.longestRoadPoints)
         assertEquals(2, p1.biggestArmyPoints)
         assertEquals(5, p1.points)

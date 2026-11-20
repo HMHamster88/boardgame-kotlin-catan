@@ -163,14 +163,16 @@ const playersPoints = computed(() => {
         const stat = statisticsByPlayerId.get(player.userId)
         const points = stat?.points ?? 0
         const privatePoints = stat?.privatePoints ?? 0
+        const settlements = stat?.settlements ?? 0
+        const cities = stat?.cities ?? 0
         return {
             playerId: player.userId,
             name: player.name,
             points,
-            settlements: stat?.settlements ?? 0,
-            settlementPoints: stat?.settlementPoints ?? 0,
-            cities: stat?.cities ?? 0,
-            cityPoints: stat?.cityPoints ?? 0,
+            settlements,
+            settlementPoints: settlements,
+            cities,
+            cityPoints: cities * 2,
             longestRoadPoints: stat?.longestRoadPoints ?? 0,
             biggestArmyPoints: stat?.biggestArmyPoints ?? 0,
             privatePoints,

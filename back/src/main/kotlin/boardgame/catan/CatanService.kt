@@ -522,9 +522,7 @@ class CatanGameBackService(private val diceAnimationMs: Long = 1_000L) : GameBac
                 playerId = player.userId,
                 points = publicPoints[player.userId] ?: 0,
                 settlements = settlementCount,
-                settlementPoints = settlementCount,
                 cities = cityCount,
-                cityPoints = cityCount * 2,
                 longestRoadPoints = if (playerPublicState?.specialCards?.contains(
                         CatanSpecialCard.LONGEST_ROAD
                     ) == true

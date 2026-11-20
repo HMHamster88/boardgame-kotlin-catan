@@ -228,9 +228,7 @@ data class CatanPlayerStatistics(
     val playerId: String = "",
     var points: Int = 0,
     var settlements: Int = 0,
-    var settlementPoints: Int = 0,
     var cities: Int = 0,
-    var cityPoints: Int = 0,
     var longestRoadPoints: Int = 0,
     var biggestArmyPoints: Int = 0,
     /** Hidden victory-point cards; only populated once the game is finished. */
