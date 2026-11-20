@@ -17,10 +17,17 @@ java {
 }
 
 dependencies {
-    implementation("com.hmhamster:boardgame-api:0.1.0")
+    // Compile against the API classes instead of its jar. The dev launcher/IDE can keep
+    // api-<version>.jar open on Windows, which made :core:api:jar fail with "Unable to delete file".
+    implementation(files(rootProject.file("../core/api/build/classes/kotlin/main")))
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.1")
 
     testImplementation(kotlin("test"))
+}
+
+tasks.named("compileKotlin") {
+    dependsOn(gradle.includedBuild("core").task(":api:classes"))
 }
 
 val versionProperties = layout.buildDirectory.file("generated/version/version.properties")
